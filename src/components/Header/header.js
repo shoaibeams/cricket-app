@@ -1,12 +1,12 @@
 import React from 'react';
-import style from './Header/header.css';
+import style from './header.css';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
 
     const logo = () => {
         return (
-            <Link></Link>
+            <Link to=""></Link>
         );
     }
 

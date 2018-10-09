@@ -170,13 +170,13 @@ module.exports = {
           parser: safePostCssParser,
           map: shouldUseSourceMap
             ? {
-                // `inline: false` forces the sourcemap to be output into a
-                // separate file
-                inline: false,
-                // `annotation: true` appends the sourceMappingURL to the end of
-                // the css file, helping the browser find the sourcemap
-                annotation: true,
-              }
+              // `inline: false` forces the sourcemap to be output into a
+              // separate file
+              inline: false,
+              // `annotation: true` appends the sourceMappingURL to the end of
+              // the css file, helping the browser find the sourcemap
+              annotation: true,
+            }
             : false,
         },
       }),
@@ -248,7 +248,7 @@ module.exports = {
             options: {
               formatter: require.resolve('react-dev-utils/eslintFormatter'),
               eslintPath: require.resolve('eslint'),
-              
+
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -281,7 +281,7 @@ module.exports = {
               customize: require.resolve(
                 'babel-preset-react-app/webpack-overrides'
               ),
-              
+
               plugins: [
                 [
                   require.resolve('babel-plugin-named-asset-import'),
@@ -319,7 +319,7 @@ module.exports = {
               cacheDirectory: true,
               // Save disk space when time isn't as important
               cacheCompression: true,
-              
+
               // If an error happens in a package, it's possible to be
               // because it was compiled. Thus, we don't want the browser
               // debugger to show the original code. Instead, the code
@@ -336,6 +336,8 @@ module.exports = {
             test: cssRegex,
             exclude: cssModuleRegex,
             loader: getStyleLoaders({
+              modules: true,
+              localIdent: '[name]__[local]__[hash:base64:5]',
               importLoaders: 1,
               sourceMap: shouldUseSourceMap,
             }),
