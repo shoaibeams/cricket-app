@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom"
 
 import Home from './components/Home/home';
 import Layout from './hoc/Layout/layout';
-3
+
 
 class Routes extends Component {
     render() {

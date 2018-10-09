@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Header = () => {
 
-    const logo(){
+    const logo = () => {
         return (
             <Link></Link>
         );
