@@ -13,9 +13,9 @@ const Header = (props) => {
             <FontAwesome name="bars"
                 onClick={props.onOpenNav}
                 style={{
-                    color:'#dfdfdf',
-                    padding:'10px',
-                    cursor:'pointer'
+                    color: '#dfdfdf',
+                    padding: '10px',
+                    cursor: 'pointer'
                 }}
             />
         </div>
@@ -23,14 +23,14 @@ const Header = (props) => {
 
     const logo = () => (
         <Link to="/" className={style.logo}>
-            <img alt="nba logo" src="/images/nba_logo.png"/>
+            <img alt="nba logo" src="/images/logo.png" />
         </Link>
     )
-    
+
 
     return (
         <header className={style.header}>
-            <SideNav {...props}/>
+            <SideNav {...props} />
             <div className={style.headerOpt}>
                 {navBars()}
                 {logo()}

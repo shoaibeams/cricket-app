@@ -40,23 +40,24 @@ const SideNavItems = () => {
     ]
 
     const showItems = () => {
-        return items.map( (item,i) =>{
+        return items.map((item, i) => {
             return (
                 <div key={i} className={item.type}>
                     <Link to={item.link}>
-                        <FontAwesome name={item.icon}/>
+                        <FontAwesome name={item.icon} />
                         {item.text}
                     </Link>
                 </div>
             )
-        } )
+        }
+        )
     }
 
 
-    return(
-           <div>
-               {showItems()}
-           </div> 
+    return (
+        <div>
+            {showItems()}
+        </div>
     )
 }
 

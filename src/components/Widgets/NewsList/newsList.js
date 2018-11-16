@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { URL } from '../../../config'
+import { firebaseTeams, firebaseArticles, firebaseLooper } from '../../../firebase';
+
 import styles from './newslist.css';
 import Button from '../Buttons/buttons';
 import CardInfo from '../../Widgets/CardInfo/cardInfo';
@@ -22,24 +22,45 @@ class NewsList extends Component {
     }
 
     request = (start, end) => {
-
         if (this.state.teams.length < 1) {
-            axios.get(`${URL}/teams`).
-                then(response => {
+            firebaseTeams.once('value')
+                .then((snapshot) => {
+                    const teams = firebaseLooper(snapshot);
                     this.setState({
-                        teams: response.data
+                        teams
                     })
                 })
-        }
 
-        axios.get(`${URL}/articles?_start=${start}&_end=${end}`)
-            .then(response => {
+        }
+        //     axios.get(`${URL}/teams`).
+        //         then(response => {
+        //             this.setState({
+        //                 teams: response.data
+        //             })
+        //         })
+        // }
+
+        firebaseArticles.orderByChild("id").startAt(start).endAt(end).once('value')
+            .then((snapshot) => {
+                const articles = firebaseLooper(snapshot);
                 this.setState({
-                    items: [...this.state.items, ...response.data],
+                    items: [...this.state.items, ...articles],
                     start,
                     end
                 })
             })
+            .catch((e) => {
+                console.log(e);
+            })
+
+        // axios.get(`${URL}/articles?_start=${start}&_end=${end}`)
+        //     .then(response => {
+        //         this.setState({
+        //             items: [...this.state.items, ...response.data],
+        //             start,
+        //             end
+        //         })
+        //     })
     }
 
 
@@ -79,10 +100,10 @@ class NewsList extends Component {
                         }}
                         timeout={500}
                         key={i}
-                    > 
+                    >
 
                         <Link to={`/articles/${item.id}`}>
-                        <div className={styles.flex_wrapper}>
+                            <div className={styles.flex_wrapper}>
                                 <div className={styles.left}
                                     style={{
                                         background: `url('/images/articles/${item.image}')`
@@ -106,7 +127,7 @@ class NewsList extends Component {
 
     loadMore = () => {
         let end = this.state.end + this.state.amount;
-        this.request(this.state.end, end);
+        this.request(this.state.end + 1, end);
     }
 
     render() {
