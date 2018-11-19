@@ -124,19 +124,30 @@ class Signin extends Component {
                 })
 
                 if (type) {
-                    console.log('Log in');
+                    firebase.auth()
+                        .signInWithEmailAndPassword(
+                            dataToSubmit.email,
+                            dataToSubmit.password
+                        ).then(() => {
+                            this.props.history.push('/')
+                        }).catch(error => {
+                            this.setState({
+                                loading: false,
+                                registerError: error.message
+                            })
+                        })
                 }
                 else {
                     firebase.auth()
                         .createUserWithEmailAndPassword(
                             dataToSubmit.email,
                             dataToSubmit.password
-                        ).then((params) => {
+                        ).then(() => {
                             this.props.history.push('/')
                         }).catch(error => {
                             this.setState({
                                 loading: false,
-                                registerError: ''
+                                registerError: error.message
                             })
                         })
                 }
@@ -144,6 +155,13 @@ class Signin extends Component {
         }
     }
 
+    showError = () => (
+        this.state.registerError !== '' ?
+            <div className={styles.error}>
+                {this.state.registerError}
+            </div>
+            : ''
+    )
 
     render() {
         return (
@@ -164,6 +182,7 @@ class Signin extends Component {
                     />
 
                     {this.submitButton()}
+                    {this.showError()}
 
                 </form>
             </div>

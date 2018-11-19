@@ -5,7 +5,7 @@ const FormFields = ({ formData, change, id }) => {
 
     const showError = () => {
         let errorMessage = null;
-        
+
         if (formData.validation && !formData.valid)
             errorMessage = (
                 <div className={styles.labelError}>
@@ -30,6 +30,23 @@ const FormFields = ({ formData, change, id }) => {
                             onChange={(event) => change({ event, id, blur: false })}
                         />
                         {showError()}
+
+                    </div>
+                )
+                break;
+            case ('select'):
+                formTemplate = (
+                    <div>
+                        <select value={formData.value} name={formData.config.name}
+                            onBlur={(event) => change({ event, id, blur: true })}
+                            onChange={(event) => change({ event, id, blur: false })}
+                        >
+                        {formData.config.options.map((item,i) => (
+                        <option value={item.id} key={i}> {item.name} </option>
+                        ))}
+                        </select>
+
+                        
 
                     </div>
                 )
